@@ -6,6 +6,7 @@ const musicSound = new Audio('music.mp3');
 let speed = 8;
 let lastPaintTime=0;
 let score = 0;
+let life = 3;
 
 let SnakeArr=[
     {
@@ -14,7 +15,7 @@ let SnakeArr=[
     }
 ]
 
-food = {x:6, y:7};
+let food = {x:6, y:7};
 
 function main(ctime)
 {
@@ -34,6 +35,7 @@ function isCollide(snake)
      for(let i = 1; i<SnakeArr.length ;i++)
      {
         if(snake[i].x === snake[0].x && snake[i].y === snake[0].y){
+            life--;
             return true;
         }
      }
@@ -42,6 +44,7 @@ function isCollide(snake)
 
      if(snake[0].x >= 18 || snake[0].x <= 0 || snake[0].y >= 18 || snake[0].y <= 0)
      { 
+        life--;
      return true;
      }
 }
@@ -49,14 +52,38 @@ function isCollide(snake)
 function gameEngine(){
     //updating the snake array & food
 
+    // if(isCollide(SnakeArr)){
+    //     gameOverSound.play();
+    //    // musicSound.pause();
+    //     inputDir={x:0,y:0};
+    //     alert("Game over. Press any key to play again");
+    //     SnakeArr=[{x:13,y:15}]
+    //     musicSound.play();
+    //     score=0;
+    // }
+
+
+    
     if(isCollide(SnakeArr)){
         gameOverSound.play();
-       // musicSound.pause();
-        inputDir={x:0,y:0};
+        if(life>=1)
+        {
+            alert(`You have ${life} lifes remaining`);
+            inputDir={x:0,y:0};
+            SnakeArr=[{x:13,y:15}]
+            //musicSound.play();
+            score=0;
+        }
+       else{
         alert("Game over. Press any key to play again");
-        SnakeArr=[{x:13,y:15}]
-        musicSound.play();
+       SnakeArr=[{x:13,y:15}]
+       // musicSound.play();
+        inputDir={x:0,y:0};
         score=0;
+        life=3;
+       }
+       lifeBox.innerHTML = "Life: " + life;
+       scoreBox.innerHTML = "Score: " + score;
     }
 
     // If the snake has eaten the food, incremnet the score and regenarte the food
