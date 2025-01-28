@@ -72,7 +72,7 @@ function gameEngine(){
             inputDir={x:0,y:0};
             SnakeArr=[{x:13,y:15}]
             //musicSound.play();
-            score=0;
+           // score=0;
         }
        else{
         alert("Game over. Press any key to play again");
